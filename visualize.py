@@ -59,6 +59,18 @@ def plot_attention_heatmap(model, sample_input):
     plt.colorbar(im)
     pass
 
+def plot_attention_weights(model, sample_input):
+    _ = model(sample_input)  # 触发 forward，计算注意力权重
+    attn_weights = model.last_attn  # 获取最后一层的注意力权重
+    attn_heatmap = attn_weights[0, 0].cpu().detach().numpy().T # 形状为 (10, 10)
+    im = plt.imshow(attn_heatmap, cmap="plasma", aspect='auto')
+    plt.gca().invert_yaxis()  # 让 y=0 出现在图底部，符合坐标系习惯
+    plt.title("Attention Weight Heatmap", fontsize=14)
+    plt.xlabel("Query Position(i)", fontsize=12)
+    plt.ylabel("Key Position(j)", fontsize=12)
+    plt.colorbar(im)
+    pass
+
 def visualize(model, train_losses, num_epochs, vocab_size, seq_len, test_input, test_target, device):
      # 可视化预测结果
     # 随机选择一个样本进行可视化
@@ -78,7 +90,8 @@ def visualize(model, train_losses, num_epochs, vocab_size, seq_len, test_input, 
     plot_sample_prediction(seq_len, sample_input, sample_true, model)
     plt.subplot(2,2,4)
     # 绘制注意力权重热图
-    plot_attention_heatmap(model, sample_input)
+    # plot_attention_heatmap(model, sample_input)
+    plot_attention_weights(model, sample_input)
     
     plt.suptitle("Transformer Input/Output Embedding and Linear Transformation Analysis", fontsize=16)
     # plt.tight_layout(rect=[0, 0.03, 1, 0.95])

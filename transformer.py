@@ -2,6 +2,8 @@ import torch
 import torch.nn as nn
 import numpy as np
 
+from coderlayer_with_attn import TransformerEncoderLayerWithAttn
+
 # default: d_model=128, nhead=8, num_layers=2, dim_feedforward=256, dropout=0.1
 
 class PositionalEncoding(nn.Module):
@@ -37,13 +39,13 @@ class TransformerCopyModel(nn.Module):
         # 位置编码层
         self.pos_encoder = PositionalEncoding(d_model, max_len=max_seq_len)
         # 单层编码器
-        encoder_layer = nn.TransformerEncoderLayer(d_model=d_model, nhead=nhead, dim_feedforward=dim_feedforward, dropout=dropout, batch_first=True)
+        encoder_layer = TransformerEncoderLayerWithAttn(d_model=d_model, nhead=nhead, dim_feedforward=dim_feedforward, dropout=dropout, batch_first=True)
         # num_layers层编码器
         self.transformer_encoder = nn.TransformerEncoder(encoder_layer, num_layers=num_layers)
         # 输出线性映射层
         self.fc_out = nn.Linear(d_model, vocab_size)
         # # 为了方便后续提取注意力权重，我们保存最后一层 encoder 的注意力
-        # self.last_attn = None
+        self.last_attn = None
 
     def forward(self, src):
         # src shape: (batch_size, seq_len)
@@ -52,6 +54,8 @@ class TransformerCopyModel(nn.Module):
         emb = self.pos_encoder(emb)
         # Transformer 编码器输出
         out = self.transformer_encoder(emb)
+        # 保存最后一层的注意力权重
+        self.last_attn = self.transformer_encoder.layers[-1].attn_weights  
         # # 保存最后一层编码器的输出作为隐层特征
         # self.last_hidden = out
         # 输出层映射到词汇表维度
