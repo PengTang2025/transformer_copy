@@ -17,9 +17,9 @@
    - `main.py`：完整的训练 + 可视化流程执行文件
 
 3. **数据生成流程规范化**  
-   优化了 Copy Task 所用数据集的生成方式：原版代码训练集与测试集数据由分别调用generate_data函数生成；更新后，训练集与测试集由单次调用generate_data函数生成原始数据，再随机分割产生。
-   此外，还更新了训练集与测试集的比例。
-   通过优化使其更符合科学研究规范。
+   优化了 Copy Task 所用数据集的生成方式：原版代码训练集与测试集数据由分别调用generate_data函数生成；更新后，训练集与测试集由单次调用generate_data函数生成原始数据，再随机分割产生。  
+   此外，还更新了训练集与测试集的比例。  
+   通过优化使其更符合科学研究规范。  
     ```
     # before
     def generate_data(num_samples, seq_len, vocab_size):
@@ -67,8 +67,8 @@
     </p>
 
 4. **真实注意力权重提取与展示**  
-   最重要的一点：原始项目中展示的注意力图仅是**训练外**调用 `nn.MultiheadAttention` 层生成的模拟数据，**并非模型实际 forward 中的 attention weights**。  
-   本项目通过自定义 Transformer 层（coderlayer_with_attn.py)，成功从模型内部提取真正的注意力矩阵，实现了更具解释性和分析价值的可视化。
+   最重要的一点：原始项目中展示的注意力图仅是**训练外**调用 `nn.MultiheadAttention` 层生成的模拟数据，**并非模型实际 forward 中的 attention weights**。本项目通过自定义 Transformer 层（coderlayer_with_attn.py)，成功从模型内部提取真正的注意力矩阵，实现了更具解释性和分析价值的可视化。  
+   针对自定义的Transformer 层，在此提供了独立的获取方式：[modified_transformer_to_visualize_attention](https://github.com/PengTang2025/modified_transformer_to_visualize_attention)。  
    此外，鉴于最终结果组图中其余三张图都是按照笛卡尔坐标系呈现，在本次改进中，也将注意力可视化热图由原本的图片坐标系（原点在左上角，x轴：key(j), y轴：query(i)）改为笛卡尔坐标系（原点在左下角，x轴：query(i), y轴：key(j)）展示,使得query(i)与key(j)之间的注意力关系更加直观。
     ```
     # before
