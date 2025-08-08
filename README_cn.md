@@ -98,10 +98,6 @@
       <img src="https://github.com/user-attachments/assets/629729a5-9c01-4b7d-a9ac-5cfbc4fa8188" width="45%"/>
     </p>
 
-## 📄 提示  
-
-代码包含中英双语注释，便于阅读。
-
 ## 🚀 使用说明
 
 ### 依赖
