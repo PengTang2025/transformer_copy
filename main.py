@@ -41,6 +41,7 @@ def main(my_seed, vocab_size, seq_len, num_epochs, batch_size, learning_rate):
     #     predictions = torch.argmax(test_outputs, dim=-1).cpu().numpy()
 
     # 可视化
+    model.eval()
     visualize(model, train_losses, num_epochs, vocab_size, seq_len, test_input, test_target, device)
     
 if __name__ == "__main__":
