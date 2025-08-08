@@ -4,6 +4,7 @@
 
 <img width="1607" height="885" alt="image" src="https://github.com/user-attachments/assets/432a00c6-6d73-4641-a82d-76c6c215f984" />
 
+进阶的transformer注意力理解项目: [Transformer Attention Visualization Experiment — Pig Latin Seq2Seq Task](https://github.com/PengTang2025/TransformerSeq2Seq-CopyTask-with-AttentionVis-CustomPigLatin)
 
 ## 🔧 项目改进内容
 
@@ -96,6 +97,49 @@
       <img src="https://github.com/user-attachments/assets/be57481b-f7b6-48b5-bee2-c39420828e5a" width="45%"/>
       <img src="https://github.com/user-attachments/assets/629729a5-9c01-4b7d-a9ac-5cfbc4fa8188" width="45%"/>
     </p>
+
+## 📄 提示  
+
+代码包含中英双语注释，便于阅读。
+
+## 🚀 使用说明
+
+### 依赖
+- Python 3.7+
+- PyTorch  
+- NumPy  
+- Matplotlib
+- **GPU 非必须**
+
+### 1. 创建环境
+建议新建独立的 Python 环境以避免依赖冲突：
+```bash
+conda create -n transformer-demo python=3.10
+conda activate transformer-demo
+```
+### 2. 安装依赖
+```
+pip install torch torchvision torchaudio numpy matplotlib
+```
+### 3. 开始训练
+运行以下命令即可开始训练模型并生成注意力可视化：
+```
+python train.py
+```
+所有超参数定义在 train.py 文件中 `if __name__ == "__main__":` 代码块内：
+```
+if __name__ == "__main__":
+    
+    my_seed = 42
+    vocab_size = 50
+    seq_len = 10
+    num_samples = 10000
+    num_epochs = 20
+    batch_size = 32
+    learning_rate = 0.001
+      
+    main(my_seed, vocab_size, seq_len, num_epochs, batch_size, learning_rate)
+```
 
 ## 🙏 致谢与引用
 
